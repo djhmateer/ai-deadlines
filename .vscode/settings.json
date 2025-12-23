@@ -1,0 +1,7 @@
+{
+    "github.copilot.chat.commitMessageGeneration.instructions": [
+      {
+        "text": "Follow best practices for git commit messages. Add extra detail, but don't exceed a paragraph. Add emoji"
+      }
+    ],
+}
