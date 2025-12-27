@@ -1,12 +1,46 @@
-## The Stack
-
-TBD
-
 # The Red:4 Store
 
 This will be an open source ecommerce API for Red:4 Aerospace to sell merch for the Enceladus mission in 2029, where we'll be sending a probe beneath the ice of the little Kronian moon looking for signs of life. 
 
 We're sharing what we're building because we like open source and want to give back.
+  
+## The Stack
+
+- Express for the API
+- Sequelize for data access
+- SQLite3 for the development and testing database,
+PostgreSQL for production
+
+## Sequelize
+
+All model code should adhere to the following:
+- Every model will have a `tableName` setting
+- The models will have an `index.js` module that
+instantiates Sequelize, using SQLite for testing and
+development, Postgres for production.
+- The `index.js` module will export each model, as well
+as the database instance as `DB.
+Every model will follow the pattern:
+js
+import { DataTypes, Model } from 'sequelize';
+class User extends Model {
+static or factory methods
+instance methods
+}
+exports.init = function(sequelize){
+User.init({
+schema goes here
+}, {
+hooks:
+{},
+tableName:
+"users"
+78
+underscored:
+true,
+sequelize
+})
+}
 
 ## Spec
 
