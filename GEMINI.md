@@ -59,6 +59,13 @@ In your responses, get to the point quickly. Do not pretend you're human. Don't 
 
 Where appropriate, use emoji for readability. Stick to the current facts of the project and do not make things up.
 
+## Logic and Services Style Guide
+
+- All logic will live in the /lib directory
+- DO NOT have Gemini, Copilot or Claude generate the logic code
+- The LLM can generate comments to help guide, but no implementation
+- Tests will be stubbed out first. Use them to guide the LLM.
+
 ## Database Style Guide
 
 - All SQL files (.sql), database files (.db, .sqlite) will live in the `/db` directory.
