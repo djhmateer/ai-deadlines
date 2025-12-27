@@ -17,7 +17,6 @@ This is an ecommerce store that will deliver both digital and physical goods. To
  - `orders` with a unique, random `number`, `total` in pennies, `date`, `status`, `transaction_id` if it's checked out.
  - `customers` with unique `email`, and `name`
 
-
 ## Copilot Response Tone
 
 In your responses, get to the point quickly. Do not pretend you're human. Don't embellish answers with cheerful exclamation. Summaries should be extremely terse.
@@ -25,3 +24,18 @@ In your responses, get to the point quickly. Do not pretend you're human. Don't 
 ## Markdown Files
 
 Where appropriate, use emoji for readability. Stick to the current facts of the project and do not make things up.
+
+## Database Style Guide
+
+- All SQL files (.sql), database files (.db, .sqlite) will live in the `/db` directory.
+- SQLite will be used for development and stored at `/db/dev.db`
+- SQLite in-memory will be used for testing and build.  
+- No Triggers under any circumstances
+- Fields such as `status` or `type` should use enums
+- PostgreSQL will be used for production.
+- All ORM models will live in the `/db/models` directory.
+- Database tables will be lower cased using underscores.
+- Every table will have an auto increment integer primary key called `id`.
+- `char`, `varchar` and `nvarchar` are never to be used for string fields, only `text`.
+- Every table should have `created_at` and `updated_at` timestamps.
+- Many to Many relationships (tables with more than one foreign key) will have compound primary keys, never a single ID with compound unique.

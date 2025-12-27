@@ -1,41 +1,47 @@
--- Customers table
+-- Database schema for The Red:4 Store, designed for SQLite.
+
+-- Customers table: Stores unique customer information.
 CREATE TABLE customers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     email TEXT UNIQUE NOT NULL,
     name TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- Products table
+-- Products table: Defines the products available for sale.
 CREATE TABLE products (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     sku TEXT UNIQUE NOT NULL,
     name TEXT NOT NULL,
     description TEXT,
-    price INTEGER NOT NULL, -- Stored in pennies to avoid floating point issues
-    type TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    price INTEGER NOT NULL, -- Stored in pennies
+    type TEXT NOT NULL CHECK (type IN ('digital', 'hardware', 'kitchenware', 'clothing')),
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- Inventory table
+-- Inventory table: Tracks stock levels and locations for products.
 CREATE TABLE inventory (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     product_id INTEGER NOT NULL,
     stock_level INTEGER NOT NULL DEFAULT 0,
-    location TEXT, -- Can be a warehouse location or a download URL for digital products
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    location TEXT, -- Warehouse location or download URL for digital products
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES products (id)
 );
 
--- Orders table
+-- Orders table: Records customer orders.
 CREATE TABLE orders (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     number TEXT UNIQUE NOT NULL,
     customer_id INTEGER NOT NULL,
     total INTEGER NOT NULL, -- Stored in pennies
-    status TEXT NOT NULL,
+    status TEXT NOT NULL CHECK (status IN ('pending', 'paid', 'processed', 'shipped', 'delivered', 'cancelled')),
     transaction_id TEXT,
-    ordered_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (customer_id) REFERENCES customers (id)
 );
 
@@ -45,9 +51,12 @@ CREATE TABLE order_items (
     order_id INTEGER NOT NULL,
     product_id INTEGER NOT NULL,
     quantity INTEGER NOT NULL DEFAULT 1,
-    price INTEGER NOT NULL, -- Price at the time of purchase
+    price INTEGER NOT NULL, -- Price at the time of purchase, in pennies
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (order_id) REFERENCES orders (id),
-    FOREIGN KEY (product_id) REFERENCES products (id)
+    FOREIGN KEY (product_id) REFERENCES products (id),
+    UNIQUE (order_id, product_id)
 );
 
 -- Indexes for performance
