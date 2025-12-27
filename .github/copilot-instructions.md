@@ -11,36 +11,37 @@ We're sharing what we're building because we like open source and want to give b
 - SQLite3 for the development and testing database,
 PostgreSQL for production
 
-## Sequelize
+## Sequelize Style
 
 All model code should adhere to the following:
+
 - Every model will have a `tableName` setting
-- The models will have an `index.js` module that
-instantiates Sequelize, using SQLite for testing and
-development, Postgres for production.
-- The `index.js` module will export each model, as well
-as the database instance as `DB.
+- The models will have an `index.js` module that instantiates Sequelize, using SQLite for testing and development, Postgres for production.
+- The `index.js` module will export each model, as well as the database instance as `DB.
+
 Every model will follow the pattern:
-js
+```js
 import { DataTypes, Model } from 'sequelize';
+
 class User extends Model {
-static or factory methods
-instance methods
+  // static or factory methods
+  // instance methods
 }
-exports.init = function(sequelize){
-User.init({
-schema goes here
-}, {
-hooks:
-{},
-tableName:
-"users"
-78
-underscored:
-true,
-sequelize
-})
-}
+
+exports.init = function (sequelize) {
+  User.init(
+    {
+      // schema goes here
+    },
+    {
+      hooks: {},
+      tableName: 'users',
+      underscored: true,
+      sequelize
+    }
+  );
+};
+```
 
 ## Spec
 
