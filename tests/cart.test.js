@@ -128,12 +128,12 @@ describe("Shopping Cart Business Logic", () => {
         });
 
         it("updates the quantity of an item in the cart", async () => {
-            const updatedCart = await updateItem(cart, mockProductPhysical.id, 5);
+            const updatedCart = await updateItem(cart.id, mockProductPhysical.id, 5);
             expect(updatedCart.items[0].quantity).toBe(5);
         });
 
         it("recalculates the cart total after an update", async () => {
-            const updatedCart = await updateItem(cart, mockProductPhysical.id, 5);
+            const updatedCart = await updateItem(cart.id, mockProductPhysical.id, 5);
             expect(updatedCart.total).toBe(mockProductPhysical.price * 5);
         });
     });
@@ -144,17 +144,17 @@ describe("Shopping Cart Business Logic", () => {
         });
         
         it("throws an error when updating with a quantity of zero", async () => {
-            await expect(updateItem(cart, mockProductPhysical.id, 0))
+            await expect(updateItem(cart.id, mockProductPhysical.id, 0))
                 .rejects.toThrow("Quantity must be a positive integer");
         });
 
         it("throws an error if the updated quantity exceeds stock", async () => {
-            await expect(updateItem(cart, mockProductPhysical.id, 11))
+            await expect(updateItem(cart.id, mockProductPhysical.id, 11))
                 .rejects.toThrow("Not enough stock");
         });
 
         it("throws an error if the item to update is not in the cart", async () => {
-            await expect(updateItem(cart, 999, 1))
+            await expect(updateItem(cart.id, 999, 1))
                 .rejects.toThrow("Item not found in cart");
         });
     });
@@ -166,19 +166,19 @@ describe("Shopping Cart Business Logic", () => {
         });
 
         it("removes an item from the cart", async () => {
-            const updatedCart = await removeFromCart(cart, mockProductDigital.id);
+            const updatedCart = await removeFromCart(cart.id, mockProductDigital.id);
             expect(updatedCart.items.length).toBe(1);
         });
 
         it("recalculates the total after removing an item", async () => {
-            const updatedCart = await removeFromCart(cart, mockProductDigital.id);
+            const updatedCart = await removeFromCart(cart.id, mockProductDigital.id);
             expect(updatedCart.total).toBe(mockProductPhysical.price * 2);
         });
     });
 
     describe("Remove From Cart: The sad path, with error conditions", () => {
         it("throws an error if the item to remove is not in the cart", async () => {
-            await expect(removeFromCart(cart, 999))
+            await expect(removeFromCart(cart.id, 999))
                 .rejects.toThrow("Item not found in cart");
         });
     });
@@ -190,17 +190,17 @@ describe("Shopping Cart Business Logic", () => {
         });
 
         it("removes all items from the cart", async () => {
-            const updatedCart = await clearCart(cart);
+            const updatedCart = await clearCart(cart.id);
             expect(updatedCart.items.length).toBe(0);
         });
-        
+
         it("resets the item count to zero", async () => {
-            const updatedCart = await clearCart(cart);
+            const updatedCart = await clearCart(cart.id);
             expect(updatedCart.item_count).toBe(0);
         });
 
         it("resets the total to zero", async () => {
-            const updatedCart = await clearCart(cart);
+            const updatedCart = await clearCart(cart.id);
             expect(updatedCart.total).toBe(0);
         });
     });
