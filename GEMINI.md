@@ -129,7 +129,7 @@ describe("The things I'm trying to avoid", () => {
 ```
 ## Logic and Services Style Guide
 
-- All logic will live in the /lib directory
+- All logic and services will live in the /lib directory
 - DO NOT have Gemini, Copilot or Claude generate the logic code
 - The LLM can generate comments to help guide, but no implementation
 - Tests will be stubbed out first. Use them to guide the LLM.
