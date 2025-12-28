@@ -5,7 +5,7 @@ import {
   updateItem,
   removeFromCart,
   clearCart,
-} from "../lib/cart.js";
+} from "../lib/cart_service.js";
 
 // Mocking the models since they don't exist yet.
 // We are imagining a Product model.
