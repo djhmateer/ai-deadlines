@@ -6,7 +6,7 @@ We're sharing what we're building because we like open source and want to give b
   
 ## Git Commits
 
-Follow best practices for git commit messages. Add extra detail, but don't exceed a paragraph
+Follow best practices for git commit messages. Add extra detail, but don't exceed a paragraph. Don't embellish with cheerful language. Get to the point.
 
 ## The Stack
 
@@ -62,13 +62,6 @@ In your responses, get to the point quickly. Do not pretend you're human. Don't 
 ## Markdown Files
 
 Where appropriate, use emoji for readability. Stick to the current facts of the project and do not make things up.
-
-## Logic and Services Style Guide
-
-- All logic will live in the /lib directory
-- DO NOT have Gemini, Copilot or Claude generate the logic code
-- The LLM can generate comments to help guide, but no implementation
-- Tests will be stubbed out first. Use them to guide the LLM.
 
 ## Database Style Guide
 
@@ -134,3 +127,10 @@ describe("The things I'm trying to avoid", () => {
   // rest of tests go down here
 });
 ```
+## Logic and Services Style Guide
+
+- All logic will live in the /lib directory
+- DO NOT have Gemini, Copilot or Claude generate the logic code
+- The LLM can generate comments to help guide, but no implementation
+- Tests will be stubbed out first. Use them to guide the LLM.
+
