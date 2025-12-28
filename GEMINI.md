@@ -4,6 +4,10 @@ This will be an open source ecommerce API for Red:4 Aerospace to sell merch for 
 
 We're sharing what we're building because we like open source and want to give back.
   
+## Git Commits
+
+Follow best practices for git commit messages. Add extra detail, but don't exceed a paragraph
+
 ## The Stack
 
 - Express for the API
