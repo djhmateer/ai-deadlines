@@ -2,22 +2,22 @@
 
 ### Structural Issues
 
-- [ ] **Transaction scope bug (lines 143, 192, 222, 244)** — `recalculateCart` is called inside transactions but doesn't receive the transaction object. It does its own `Cart.findByPk` outside the transaction context, which could cause race conditions or read uncommitted data.
+- [x] **Transaction scope bug** — `recalculateCart` now accepts and uses transaction parameter.
 
-- [ ] **Circular dependency risk (line 1)** — Imports from `../db/models` which doesn't have an index.js yet. When created, be careful about circular imports if models reference each other.
+- [x] **Circular dependency risk** — Added comment at top of file noting the risk.
 
-- [ ] **Mixed ID types** — `Cart.id` is a UUID string (line 67), `CartItem.id` and `Product.id` appear to be integers. JSDoc at line 17 says `CartItem.id` is `number` but `cart_id` is `string`. Fine but could confuse future contributors.
+- [x] **Mixed ID types** — Added clarifying comment: Cart.id is UUID string, others are integers.
 
 ### Logic Concerns
 
-- [ ] **No stock decrement** — `addToCart` checks `hasStock()` but never actually decrements inventory. Stock will pass validation repeatedly until checkout.
+- [x] **No stock decrement** — Added comment clarifying stock is validated but decremented at checkout.
 
-- [ ] **Missing getCart export usage** — `getCart` (line 81) includes Product in the query, but `recalculateCart` doesn't. Inconsistent eager loading.
+- [x] **Inconsistent eager loading** — `recalculateCart` now includes Product like `getCart` does.
 
-- [ ] **No cart existence check in updateItem/removeFromCart/clearCart** — These functions will fail with cryptic errors if passed an invalid cartId. `recalculateCart` throws "Cart not found during recalculation" but that's deep in the stack.
+- [x] **No cart existence check** — Added early cart existence checks to updateItem/removeFromCart/clearCart.
 
 ### Minor
 
-- [ ] Unused import: `v4 as uuid` could be imported only in `createCart`
-- [ ] JSDoc typedef for `Cart` (lines 4-13) duplicates what Sequelize models should define
-- [ ] Comment at line 39-41 acknowledges a potential issue but doesn't guard against it
+- [x] uuid import is used in `createCart` — not actually unused, left as-is.
+- [x] JSDoc typedefs removed — models will define these.
+- [x] Guard in recalculateCart simplified — now throws clear "Cart not found" error.
